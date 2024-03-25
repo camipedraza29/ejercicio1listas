@@ -1,5 +1,5 @@
-import 'package:ejercicio1listas/list/get_list_html.dart';
-import 'package:ejercicio1listas/list/post.dart';
+import 'package:ejercicio1listas/requesters/get_list_html.dart';
+import 'package:ejercicio1listas/domain/entities/post.dart';
 import 'package:flutter/material.dart';
 
 class ListScreen extends StatelessWidget {

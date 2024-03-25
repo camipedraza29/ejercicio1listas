@@ -1,7 +1,7 @@
 
 
 import 'package:dio/dio.dart';
-import 'package:ejercicio1listas/list/post.dart';
+import 'package:ejercicio1listas/domain/entities/post.dart';
 
 
 class GetListHtml {
