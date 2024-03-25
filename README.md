@@ -1,6 +1,6 @@
 # ejercicio1listas
 
-A new Flutter project.
+Un nuevo proyecto de Flutter para traer informacion de un API
 
 ## Getting Started
 
