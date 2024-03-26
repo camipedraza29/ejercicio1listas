@@ -1,6 +1,8 @@
+import 'package:ejercicio1listas/presentation/providers/list_providers.dart';
 import 'package:ejercicio1listas/requesters/get_list_html.dart';
 import 'package:ejercicio1listas/domain/entities/post.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -14,14 +16,7 @@ class ListScreen extends StatelessWidget {
         titleTextStyle: const TextStyle(color: Colors.white, fontSize: 20),
         centerTitle: true,
       ),
-      body: Center(
-        child: FutureBuilder<List<Post>>(
-          future: GetListHtml().getList(),
-          builder: (context, snapshot) {
-            return ListViewCreate(postList: snapshot.data);
-          },
-        ),
-      ),
+      body: Center(child: ListViewCreate()),
     );
   }
 }
@@ -36,28 +31,15 @@ class ListViewCreate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-            child: ListView(
-          children: widgetList(),
-        ))
-      ],
-    );
+    final listProviders = context.watch<ListProviders>();
+    listProviders.getPosts();
+    return ListView.builder(
+        itemCount: listProviders.postList.length,
+        itemBuilder: (context, index) {
+          final post = listProviders.postList[index];
+          return postContainer(post);
+        });
   }
-
-  List<Widget> widgetList() {
-    List<Widget> list = [];
-    list.add(postSpace());
-    postList?.forEach((post) {
-      list.add(postContainer(post));
-      list.add(postSpace());
-    });
-    return list;
-  }
-
-  SizedBox postSpace() => const SizedBox(height:10);
 
   Container postContainer(Post post) {
     return Container(
@@ -65,6 +47,7 @@ class ListViewCreate extends StatelessWidget {
           color: const Color.fromRGBO(184, 184, 184, 1),
           borderRadius: BorderRadius.circular(20)),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      margin: const EdgeInsets.only(top: 15, left: 5, right: 5),
       child: Text(post.title),
     );
   }
